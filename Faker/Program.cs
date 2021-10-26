@@ -6,24 +6,24 @@ using Faker.Generator;
 
 namespace Test
 {
-    public class NewIntGenerator : Generator<int>
+    public class CustomIntGenerator : Generator<int>
     {
         protected override int ObjectGeneration(Random random)
         {
-            return 322;
+            return 2021;
         }
     }
 
-    public class NewStringGenerator : Generator<string>
+    public class CustomStringGenerator : Generator<string>
     {
         protected override string ObjectGeneration(Random random)
         {
-            string[] songWords =
+            string[] words =
             {
-                "Never gonna give you up", "Never gonna let you down", "Never gonna run around and desert you",
-                "Never gonna make you cry", "Never gonna say goodbye", "Never gonna tell a lie and hurt you"
+                "Somebody", "Once", "Told", "Me", "The", "World", 
+                "Is", "Gonna", "Roll", "Me"
             };
-            return songWords[random.Next(0, songWords.Length - 1)];
+            return words[random.Next(0, words.Length - 1)];
         }
     }
 }
@@ -34,21 +34,21 @@ namespace Faker
 
     class Program
     {
-        class A
+        class ClassOne
         {
-            public int i;
-            public B B;
+            public int Int;
+            public ClassTwo refToTwo;
         }
 
-        class B
+        class ClassTwo
         {
-            public C C;
-            public double d;
+            public ClassThree refToThree;
+            public double Double;
         }
 
-        class C
+        class ClassThree
         {
-            public A A;
+            public ClassOne refToOne;
         }
 
         class TestClass
@@ -58,7 +58,7 @@ namespace Faker
             public bool Bool;
         }
 
-        class TestClassInField
+        class TestWithClassInField
         {
             public string String;
             public double Double;
@@ -75,10 +75,10 @@ namespace Faker
             PrintObjectValue(faker.Create<TestConstructors>(), " ");
             PrintDelimiter();
 
-            PrintObjectValue(faker.Create<A>(), " ");
+            PrintObjectValue(faker.Create<ClassOne>(), " ");
             PrintDelimiter();
 
-            PrintObjectValue(faker.Create<TestClassInField>(), " ");
+            PrintObjectValue(faker.Create<TestWithClassInField>(), " ");
             PrintDelimiter();
 
             foreach (TestClass testClass in faker.Create<List<TestClass>>())
@@ -98,9 +98,9 @@ namespace Faker
             PrintDelimiter();
 
             FakerConfiguration configuration2 = new FakerConfiguration();
-            configuration2.Add<TestConfiguration, string, NewStringGenerator>(Config => Config.ConfigString);
-            configuration2.Add<TestConfiguration, int, NewIntGenerator>(Config => Config.ConfigInt);
-            configuration2.Add<TestConfiguration, int, NewIntGenerator>(Config => Config.PropIntConfig);
+            configuration2.Add<TestConfiguration, string, CustomStringGenerator>(Config => Config.ConfigString);
+            configuration2.Add<TestConfiguration, int, CustomIntGenerator>(Config => Config.ConfigInt);
+            configuration2.Add<TestConfiguration, int, CustomIntGenerator>(Config => Config.PropIntConfig);
 
             var faker2 = new FakerInstance(configuration2);
             PrintObjectValue(faker2.Create<TestConfiguration>(), " ");

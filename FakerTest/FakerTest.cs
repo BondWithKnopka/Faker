@@ -61,9 +61,9 @@ namespace FakerTest
         public void Init()
         {
             FakerConfiguration configuration = new FakerConfiguration();
-            configuration.Add<TestConfig, string, NewStringGenerator>(TestConfig => TestConfig.ConfigString);
-            configuration.Add<TestConfig, int, NewIntGenerator>(TestConfig => TestConfig.ConfigInt);
-            configuration.Add<TestConfig, int, NewIntGenerator>(TestConfig => TestConfig.PropIntConfig);
+            configuration.Add<TestConfig, string, CustomStringGenerator>(TestConfig => TestConfig.ConfigString);
+            configuration.Add<TestConfig, int, CustomIntGenerator>(TestConfig => TestConfig.ConfigInt);
+            configuration.Add<TestConfig, int, CustomIntGenerator>(TestConfig => TestConfig.PropIntConfig);
             _fakerInstance = new FakerInstance(configuration);
         }
 
